@@ -1,16 +1,15 @@
-import express from "express";
-import React from "react";
-import Router from "react-router";
+import express from 'express';
+import React from 'react';
+import Router from 'react-router';
+import 'babel/register';
+
 const app = express();
 
-
-
-
 app.set('views', './views');
-// app.set('views', __dirname + '/views');
-// var engineOptions = { transformViews: false };
-app.set('view engine', 'jade');
-// app.engine('jsx', require('express-react-views').createEngine(engineOptions));
+
+var engineOptions = { transformViews: false };
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine(engineOptions));
 
 import routes from "../shared/routes";
 

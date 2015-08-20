@@ -1,4 +1,4 @@
-var webpack = require('webpack');
+import webpack from 'webpack';
 
 module.exports = {
   devtool: 'inline-source-map',

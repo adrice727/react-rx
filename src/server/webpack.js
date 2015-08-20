@@ -1,6 +1,6 @@
-import WebpackDevServer from "webpack-dev-server";
-import webpack from "webpack";
-import config from "../../webpack.config.dev";
+import WebpackDevServer from 'webpack-dev-server';
+import webpack from 'webpack';
+import config from '../../webpack.config.dev';
 
 var server = new WebpackDevServer(webpack(config), {
   // webpack-dev-server options
@@ -9,4 +9,4 @@ var server = new WebpackDevServer(webpack(config), {
   stats: { colors: true },
 });
 
-server.listen(9000, "localhost", function() {});  
+server.listen(9000, 'localhost', function() {});
