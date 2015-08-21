@@ -1,8 +1,12 @@
 import React from 'react';
 import { RouteHandler } from 'react-router';
-// import './app.scss';
+import test from './test';
+import './app.scss';
+
 
 // var RouteHandler = Router.RouteHandler;
+
+console.log(test());
 
 export default class App extends React.Component {
   render() {
