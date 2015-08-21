@@ -1,4 +1,5 @@
-import webpack from 'webpack';
+// import webpack from 'webpack';
+var webpack = require('webpack');
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -21,7 +22,8 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.jsx?$/, loaders: ['react-hot', 'babel-loader?experimental'], exclude: /node_modules/ }
+      { test: /\.jsx?$/, loaders: ['react-hot', 'babel-loader?experimental'], exclude: /node_modules/ },
+      { test: /\.scss$/, loaders: ['style', 'css', 'sass']}
     ]
   }
 }
