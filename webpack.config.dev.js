@@ -1,4 +1,3 @@
-// import webpack from 'webpack';
 var webpack = require('webpack');
 
 module.exports = {
@@ -18,12 +17,12 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
   ],
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['', '.js', '.jsx']
   },
   module: {
     loaders: [
       { test: /\.jsx?$/, loaders: ['react-hot', 'babel-loader?experimental'], exclude: /node_modules/ },
-      { test: /\.scss$/, loader: 'style-loader!css-loader!sass-loader'}
+      { test: /\.scss$/, loaders: ['style', 'css', 'sass'] }
     ]
   }
 }
