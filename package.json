@@ -1,16 +1,19 @@
 {
   "name": "react-rx",
   "version": "1.0.0",
+  "babel": {
+    "stage": "1"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist",
-    "watch-js": "./node_modules/.bin/babel src -d dist --experimental -w",
+    "watch-js": "./node_modules/.bin/babel src -d dist --stage 0 -w",
     "dev-server": "node dist/server/webpack",
     "server": "nodemon dist/server/server",
     "start": "npm run watch-js & npm run dev-server & npm run server",
-    "build": "npm run clean && ./node_modules/.bin/babel src -d dist --experimental"
+    "build": "npm run clean && ./node_modules/.bin/babel src -d dist --stage 0"
   },
   "author": "",
   "license": "MIT",
@@ -19,6 +22,7 @@
     "babel": "^5.8.21",
     "babel-core": "^5.8.22",
     "babel-loader": "^5.3.2",
+    "babel-runtime": "^5.8.20",
     "css-loader": "^0.16.0",
     "express": "^4.13.3",
     "express-react-views": "^0.8.2",
@@ -27,6 +31,7 @@
     "node-sass": "^3.2.0",
     "nodemon": "^1.4.1",
     "plugin": "^0.3.3",
+    "radium": "^0.13.8",
     "ramda": "^0.17.1",
     "react": "^0.13.3",
     "react-hot-loader": "^1.2.8",
