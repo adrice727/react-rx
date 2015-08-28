@@ -1,10 +1,13 @@
 import React from 'react';
 
-var css = ['http://fonts.googleapis.com/css?family=Raleway'];
+var css = [
+  'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css',
+  'http://fonts.googleapis.com/css?family=Raleway'
+];
 
-var App = React.createClass({
+export default class Index extends React.Component {
 
-  render: function () {
+  render () {
     return (
         <html style={cssReset}>
           <head>
@@ -18,9 +21,7 @@ var App = React.createClass({
         </html>
     );
   }
-});
-
-module.exports = App;
+}
 
 var cssReset = {
   margin: '0',

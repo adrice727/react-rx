@@ -2,11 +2,16 @@ import api from './Api';
 import Rx from 'rx-lite';
 
 var projectSearchParams = { t: 'project', q: 'h'}
-var projectRequestStream = Rx.Observable.just({relativeUrl: 'suggest', queryParams: projectSearchParams});
+
+/* Create behavior subject whose initial value is an empty string */
+var projectRequestStream = new Rx.BehaviorSubject('');
+
+
+// var projectRequestStream = Rx.Observable.just({relativeUrl: 'suggest', queryParams: projectSearchParams});
 
 var projectResponseStream = projectRequestStream
-  .flatMap(function(options) {
-    return Rx.Observable.fromPromise(api.search(options.relativeUrl, options.queryParams));
+  .flatMap(function(query) {
+    return Rx.Observable.fromPromise(api.search('suggest', { q: query }));
   });
 
 export default projectResponseStream;
