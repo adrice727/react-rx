@@ -2,6 +2,7 @@ import express from "express";
 import React from "react";
 import Router from "react-router";
 import 'babel/register';
+import 'node-sass';
 
 const app = express();
 

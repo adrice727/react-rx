@@ -1,4 +1,6 @@
 var webpack = require('webpack');
+var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -8,13 +10,14 @@ module.exports = {
     './src/client/entry',
   ],
   output: {
-    path: __dirname + '/dist/js/',
+    path: path.join(__dirname,  '/dist/js/'),
     filename: 'app.js',
     publicPath: 'http://localhost:9000/js/',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new ExtractTextPlugin('styles.css')
   ],
   resolve: {
     extensions: ['', '.js', '.jsx']
@@ -22,7 +25,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.jsx?$/, loaders: ['react-hot', 'babel-loader?experimental'], exclude: /node_modules/ },
-      { test: /\.scss$/, loaders: ['style', 'css', 'sass'] }
+      { test: /\.scss$/, loader: ExtractTextPlugin.extract('css-loader!sass-loader') }
     ]
   }
 }
