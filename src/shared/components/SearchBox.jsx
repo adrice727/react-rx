@@ -1,55 +1,60 @@
 import React from 'react';
-import Search from '../services/Search';
+import Rx from 'rx-lite';
+import { projectRequestStream as search } from '../services/Search';
 
 export default class SearchBox extends React.Component {
 
   constructor(props) {
     super(props);
-    this.placeholder = `Search for ${this.props.type}`;
+    this.placeholder = `Search for a ${this.props.type}`;
     this.state = { value : '' };
     this.handleChange.bind(this);
   }
 
   handleChange() {
     this.setState({value: event.target.value});
+    console.log(this.state.value);
+    console.log(search);
+    search.onNext(this.state.value);
   }
 
   render() {
     this.value = this.state.value;
     return (
-      <div style={styles_searchBox}>
-        <i style={styles_searchBoxIcon} className='fa fa-search'/>
+      <div style={styles.searchBox}>
+        <i style={styles.searchBoxIcon} className='fa fa-search'/>
         <input type='text'
                value={this.value}
                placeholder={this.placeholder}
-               style={styles_searchBoxInput}
+               style={styles.searchBoxInput}
                onChange={this.handleChange.bind(this)}/>
       </div>
     )
   }
 }
 
-var styles_searchBox = {
-  position: 'relative',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '300px',
-  margin: '10px auto',
-  padding: '10px 0'
-};
-
-var styles_searchBoxInput = {
-  height: '30px',
-  lineHeight: '30px',
-  fontFamily: 'Raleway, sans-serif',
-  fontSize: '18px',
-  padding: '0 30px',
-  fontStyle: 'italic'
-};
-
-var styles_searchBoxIcon = {
-  position: 'absolute',
-  top: '18px',
-  left: '35px'
-};
+var styles = {
+  searchBox : {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '30%',
+    margin: '10px auto',
+    padding: '10px 0'
+  },
+  searchBoxInput : {
+    width: '100%',
+    height: '30px',
+    lineHeight: '30px',
+    fontFamily: 'Raleway, sans-serif',
+    fontSize: '18px',
+    padding: '0 30px',
+    fontStyle: 'italic'
+  },
+  searchBoxIcon : {
+    position: 'absolute',
+    top: '18px',
+    left: '10px'
+  }
+}
