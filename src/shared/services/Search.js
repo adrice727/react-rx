@@ -1,36 +1,18 @@
-// import api from './Api';
-// import Rx from 'rx-lite';
-// import R from 'ramda';
-//
-// /* Create behavior subject whose initial value is an empty string */
-// export var projectRequestStream = new Rx.ReplaySubject(1);
-// projectRequestStream.onNext('herb');
-// // export var projectRequestStream = Rx.Observable.just('herbal');
-//
-// // var projectRequestStream = Rx.Observable.just({relativeUrl: 'suggest', queryParams: projectSearchParams});
-//
-// export var projectResponseStream = projectRequestStream
-//   .flatMap( query => Rx.Observable.fromPromise(api.search('suggest', { t: 'project', q: query })))
-//   .map( response => R.path(['data', 'response', 'docs', 'project'], response));
-//
-// // export var projectResponseStream = projectRequestStream
-// //   .flatMap( query => console.log(query));
-//
-// var test = projectRequestStream.flatMap(function(v){console.log('VVV',v)});
-
-
 import api from './Api';
 import Rx from 'rx-lite';
+import R from 'ramda';
 
-var projectSearchParams = { t: 'project', q: 'h'}
+/* Create behavior subject whose initial value is an empty string. The value of
+ * the subject will be updated by as user enters input.
+ */
+export var projectRequestStream = new Rx.BehaviorSubject('');
 
-/* Create behavior subject whose initial value is an empty string */
-export var projectRequestStream = new Rx.BehaviorSubject('r');
-
-// var projectRequestStream = Rx.Observable.just({relativeUrl: 'suggest', queryParams: projectSearchParams});
-
+/*
+ * Receives values from the request stream subject, makes API calls to retrieve
+ * project search results, and outputs those results as an observable stream.
+ */
 export var projectResponseStream = projectRequestStream
-  .flatMap(function(query) {
-    console.log('getting things herre', query)
-    return Rx.Observable.fromPromise(api.search('suggest', { t: 'project', q: query }))
-  })
+  .sample(500)
+  .distinctUntilChanged()
+  .flatMap( query => Rx.Observable.fromPromise(api.search('suggest', { t: 'project', q: query })))
+  .map( results => R.path(['data', 'response', 'docs', 'project'], results))

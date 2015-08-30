@@ -1,19 +1,21 @@
 import React from 'react';
 import Rx from 'rx-lite';
 import SearchBox from '../../components/SearchBox';
-import { projectResponseStream as projectStream } from '../../services/Search';
-import ProjectSearchResults from './components/ProjectSearchResults';
+import { projectRequestStream as searchQuery, projectResponseStream as searchResults } from '../../services/Search';
+
 
 export default class ProjectSearch extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = { results: [] };
+    // this.updateSearch.bind(this);
   }
 
+  updateSearch (value) { searchQuery.onNext(value); }
 
   componentWillMount () {
-    projectStream.subscribe( (response) => {
+    searchResults.subscribe( (response) => {
       console.log('project search getting values', response);
       this.setState({results: response});
     })
@@ -22,8 +24,8 @@ export default class ProjectSearch extends React.Component {
   render() {
     return (
         <div>
-          <SearchBox type='project' />
-          <ProjectSearchResults results={this.state.results} />
+          <SearchBox type='project' updateSearch={this.updateSearch} />
+
         </div>
     );
   }

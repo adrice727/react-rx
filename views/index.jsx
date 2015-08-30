@@ -30,10 +30,3 @@ var styles = {
     fontFamily: 'Raleway, sans-serif'
   }
 }
-
-
-
-// var cssReset = {
-//   margin: '0',
-//   padding: '0',
-// };

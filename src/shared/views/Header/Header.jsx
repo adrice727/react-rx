@@ -7,7 +7,7 @@ export default class App extends React.Component {
   render() {
     return (
         <div>
-            <h1 style={styles.header}>Shocase</h1>
+            <h1 style={styles.header}>React + Rx</h1>
         </div>
 
     );
