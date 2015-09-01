@@ -28,6 +28,6 @@ export default class Index extends React.Component {
 var styles = {
   body: {
     margin: '0',
-    fontFamily: 'Raleway, sans-serif'
+    fontFamily: 'Raleway, sans-serif',
   }
 }

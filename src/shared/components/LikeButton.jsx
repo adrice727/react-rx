@@ -12,7 +12,7 @@ export default class LikeButton extends React.Component {
     return (
       <button key='c1'style={styles.button}>
         <i key='c2' style={styles.icon} className="fa fa-thumbs-up"></i>
-        <div key='c3' >Like</div>
+        <div key='c3' style={styles.label} >Like</div>
       </button>
     );
   }
@@ -20,6 +20,7 @@ export default class LikeButton extends React.Component {
 
 var styles = {
   button: {
+    position: 'absolute',
     height: '48px',
     width: '48px',
     margin: '8px',
@@ -38,5 +39,12 @@ var styles = {
     ':hover': {
       color: '#ffffff'
     }
+  },
+  label: {
+    fontFamily: 'Roboto, sans-serif',
+    textTransform: 'uppercase',
+    letterSpacing: '.5px',
+    fontWeight: '300',
+    marginTop: '2px'
   }
 }

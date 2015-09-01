@@ -12,13 +12,12 @@ export default class ProjectCard extends React.Component {
   }
   render() {
     return (
-      <div style={styles.card}>
+      <div className='project-card' style={styles.card}>
         <LikeButton type={'project'}
           id={this.props.project.id}
           liked={this.props.project.likedByCurrentUser} />
         <ProjectDetails project={this.props.project} />
         <ProjectStats stats={{views: this.props.project.numViews, likes: this.props.project.numLikes}} />
-
       </div>
     );
   }
@@ -26,9 +25,10 @@ export default class ProjectCard extends React.Component {
 
 var styles = {
   card: {
-    display: 'flex',
+    width: '100%',
     minHeight: '142px',
     backgroundColor: '#F5F4F6',
-    padding: '18px 18px 9px'
+    padding: '18px 18px 9px',
+    boxSizing: 'border-box'
   }
 }

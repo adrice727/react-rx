@@ -34,7 +34,7 @@ export default class ProjectDetails extends React.Component {
 var styles = {
   container: {
     display: 'inline-block',
-    paddingLeft: '55px'
+    paddingLeft: '90px'
   },
   title: {
     margin: '0',

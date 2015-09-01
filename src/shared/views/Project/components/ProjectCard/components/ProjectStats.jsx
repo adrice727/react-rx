@@ -1,18 +1,27 @@
 import React from 'react';
 import Radium from 'radium';
+import R from 'ramda';
+import CardStat from '../../../../../components/CardStat';
+import { buildStats } from '../../../../../utilities/Utilities';
 
 @Radium
 export default class ProjectStats extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('pdpdpdp', props);
   }
   render() {
-    var stats = this.props;
+    var stats = buildStats(this.props.stats);
     return (
-      <div>
+      <div style={styles.container}>
+        { stats.map( stat => <CardStat data={stat}/> ) }
       </div>
     );
   }
 }
+
+var styles = {
+  container: {
+    float: 'right'
+  }
+};
