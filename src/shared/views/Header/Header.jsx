@@ -26,7 +26,6 @@ var styles = {
     margin: '0',
     padding: '0 20px',
     backgroundColor: '#282829',
-    color: '#00c1b6',
     height: '60px'
   },
   logo : {
@@ -39,6 +38,7 @@ var styles = {
     right: '60px',
     margin: '0',
     fontFamily: 'Raleway, sans-serif',
+    color: '#ec2127',
     lineHeight: '60px',
   }
 };
