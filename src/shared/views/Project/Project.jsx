@@ -3,6 +3,7 @@ import Radium from 'radium';
 import Rx from 'rx-lite';
 import { requestProject } from '../../stores/ProjectStore';
 import ProjectCard from './components/ProjectCard/ProjectCard';
+import ProjectNav from './components/ProjectNav/ProjectNav';
 
 @Radium
 export default class Project extends React.Component {
@@ -25,6 +26,7 @@ export default class Project extends React.Component {
     return (
       <div>
         <ProjectCard project={this.state.project}/>
+        <ProjectNav project={this.state.project} lastUpdated={this.state.project.timeSinceModified}/>
       </div>
     );
   }

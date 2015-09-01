@@ -29,5 +29,6 @@ var styles = {
   body: {
     margin: '0',
     fontFamily: 'Raleway, sans-serif',
+    backgroundColor: '#CFCFCF'
   }
 }
