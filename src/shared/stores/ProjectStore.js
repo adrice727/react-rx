@@ -14,7 +14,9 @@ var requestStream = Rx.Observable.just('https://api.github.com/users');
 
 class Project {
   constructor(data) {
-    this.name = data.projectName; 
+    R.keys(data).forEach( key => this[key] = data[key]);
+    this.type = R.path(['projectTypeList', '0'], data);
+    this.agencies = R.map(id => ({id: id, 'name': data.companies[id]}) ,R.keys(data.companies));
   }
 }
 

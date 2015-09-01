@@ -2,7 +2,7 @@ import React from 'react';
 import Radium from 'radium';
 import Rx from 'rx-lite';
 import { requestProject } from '../../stores/ProjectStore';
-import ProjectHeader from './components/ProjectHeader';
+import ProjectCard from './components/ProjectCard/ProjectCard';
 
 @Radium
 export default class Project extends React.Component {
@@ -24,7 +24,7 @@ export default class Project extends React.Component {
   render() {
     return (
       <div>
-        <ProjectHeader project={this.state.project}/>
+        <ProjectCard project={this.state.project}/>
       </div>
     );
   }

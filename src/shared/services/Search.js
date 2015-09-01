@@ -8,7 +8,7 @@ import R from 'ramda';
 /* Create behavior subject whose initial value is an empty string. The value of
  * the subject will be updated by as user enters input.
  */
-export var projectRequestStream = new Rx.ReplaySubject(1);
+export var projectRequestStream = new Rx.Subject();
 
 /*
  * Cold observable (https://goo.gl/ZTfQjd) which receives values from the request
