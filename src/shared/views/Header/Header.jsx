@@ -4,10 +4,15 @@ import Radium from 'radium';
 @Radium
 export default class App extends React.Component {
 
+  constructor(props) {
+    super(props)
+  }
+
   render() {
     return (
-        <div>
-            <h1 style={styles.header}>React + Rx</h1>
+        <div style={styles.header}>
+            <img style={styles.logo} src={'http://wpcdn.shocase.com/wp-content/uploads/2014/05/shocase_logo_retina.png'}/>
+          <h2 style={styles.text}>React + Rx</h2>
         </div>
 
     );
@@ -17,12 +22,23 @@ export default class App extends React.Component {
 var styles = {
   header : {
     width: '100%',
+    position: 'relative',
     margin: '0',
-    backgroundColor: '#3f3f3f',
+    padding: '0 20px',
+    backgroundColor: '#282829',
     color: '#00c1b6',
-    textAlign: 'center',
+    height: '60px'
+  },
+  logo : {
     height: '60px',
+    width: 'auto'
+  },
+  text : {
+    position: 'absolute',
+    top: '0px',
+    right: '60px',
+    margin: '0',
+    fontFamily: 'Raleway, sans-serif',
     lineHeight: '60px',
-    fontFamily: 'Raleway, sans-serif'
   }
 };
