@@ -2,6 +2,8 @@ import React from 'react';
 import { projectResponseStream as searchResults } from '../../../services/Search';
 import ProjectSearchCard from './ProjectSearchCard';
 
+//TODO Find a more elegant way of dealing with subscriptions/disposals
+
 export default class ProjectSearchResults extends React.Component {
 
   constructor(props) {
@@ -16,22 +18,22 @@ export default class ProjectSearchResults extends React.Component {
 
   // This is working
   componentWillMount () {
-    var x = searchResults.subscribe( (results) => {
+    var resultsStream = searchResults.subscribe( (results) => {
       this.setState({results: results});
     })
-    this.subscriptions.push(x);
+    this.subscriptions.push(resultsStream);
   }
 
   render() {
     return (
       <ul style={styles.resultsList}>
-        { this.state.results.map( project => <ProjectSearchCard project={project} /> ) }
+        { this.state.results.map( project => <ProjectSearchCard key={project.id} project={project} /> ) }
       </ul>
     )
   }
 
   componentWillUnmount () {
-    this.subscriptions.forEach( sub => sub.dispose() )
+    this.subscriptions.forEach( subsciption => subsciption.dispose() )
   }
 }
 
