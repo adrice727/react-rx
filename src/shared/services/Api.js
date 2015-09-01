@@ -9,9 +9,7 @@ const searchUrl = 'https://localhost/s/';
 /* Private Methods */
 var generateQueryString = (params) => {
   let buildString = (query, key) => [query, key, '=', params[key],'&'].join('');
-  // return R.reduce(buildString, '?', R.keys(params)).slice(0,-1);
-  return Object.keys(params).reduce(buildString, '?').slice(0,-1);
-
+  return R.reduce(buildString, '?', R.keys(params)).slice(0,-1);
 }
 
 var buildUrl = (relativeUrl, queryParams, search) => {

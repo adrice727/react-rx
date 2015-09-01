@@ -3,7 +3,8 @@ import Radium, { Style } from 'radium';
 
 var css = [
   'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css',
-  'https://fonts.googleapis.com/css?family=Raleway:300'
+  'https://fonts.googleapis.com/css?family=Roboto+Slab|Raleway:300',
+  'https://cdn.jsdelivr.net/font-hack/2.010/css/hack.min.css'
 ];
 
 @Radium

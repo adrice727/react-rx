@@ -1,7 +1,8 @@
 import React from 'react';
 import Rx from 'rx-lite';
-import { projectRequestStream as search } from '../services/Search';
+import Radium from 'radium';
 
+@Radium
 export default class SearchBox extends React.Component {
 
   constructor(props) {
@@ -14,7 +15,6 @@ export default class SearchBox extends React.Component {
   handleChange() {
     this.setState({value: event.target.value});
     this.props.updateSearch(event.target.value);
-    // search.onNext(this.state.value);
   }
 
   render() {
@@ -31,6 +31,7 @@ export default class SearchBox extends React.Component {
     )
   }
 }
+
 
 var styles = {
   searchBox : {
