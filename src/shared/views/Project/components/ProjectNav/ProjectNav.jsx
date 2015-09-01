@@ -21,13 +21,12 @@ var styles = {
   container: {
     height: '40px',
     background: '#ffffff',
-    paddingLeft: '18px'
+    paddingLeft: '22px'
   },
   text: {
     fontSize: '12px',
     color: '#B0B1B5',
     fontStyle: 'italic',
-    lineHeight: '30px',
-    padding: '0 4.5px'
+    lineHeight: '40px',
   }
 };

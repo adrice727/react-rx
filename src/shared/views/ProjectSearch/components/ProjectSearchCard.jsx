@@ -32,12 +32,14 @@ var styles = {
     margin: '10px 0',
     padding: '5px',
     border: '1px solid lightgrey',
-    textDecoration: 'none'
+    backgroundColor: '#efefef',
+    textDecoration: 'none',
   },
 
   projectImage : {
     width: '20%',
     border: '1px solid lightgrey',
+    backgroundColor: '#ffffff',
     padding: '15px'
   },
 
