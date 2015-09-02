@@ -15,6 +15,7 @@ export default class ProjectDetails extends React.Component {
 
   render() {
     let project = this.props.project;
+    console.log('the project', project);
     let primaryAssetSrc = project.primaryAsset ? getImageSrc(project.primaryAsset, 's') : '';
 
     return (
@@ -22,6 +23,15 @@ export default class ProjectDetails extends React.Component {
         <div className='project-details-feature' style={styles.featureContainer}>
           <img src={primaryAssetSrc} style={styles.feature}/>
         </div>
+        <div className='project-details-description' style={styles.descriptionContainer}>
+          <div className='project-details-description-header' style={styles.descriptionHeader}>
+          Project Description
+          </div>
+          <div className='project-details-description-header' style={styles.descriptionText}>
+          {project.description}
+          </div>
+        </div>
+
       </div>
     );
   }
@@ -45,5 +55,20 @@ var styles = {
   feature: {
     maxHeight: '100%',
     maxWidth: '100%'
+  },
+  descriptionContainer: {
+    marginTop: '20px'
+  },
+  descriptionHeader: {
+    fontFamily: 'Roboto, serif',
+    fontSize: '11px',
+    color: '#B0B1B5',
+    textTransform: 'uppercase',
+    borderBottom: 'solid 1px #CFCFCF'
+  },
+  descriptionText: {
+    color: '#818287',
+    fontSize: '12px',
+    padding: '8px 0'
   }
 }

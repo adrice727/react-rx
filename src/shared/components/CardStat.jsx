@@ -37,6 +37,7 @@ var styles = {
     fontSize: '38px',
     color: '#58585C',
     fontWeight: '100',
+    height: '70px',
     lineHeight: '70px'
   },
   label: {
