@@ -5,6 +5,6 @@ var _assets = new Map();
 const imageSizes = ['c', 's', 'm', 'th'];
 const baseUrl = 'http://localhost:8282/assets/';
 
-var getImageSrc = (asset, preferredSize) => `${baseUrl}${asset.coverImageId}-${preferredSize}.jpg`
+var getImageSrc = (asset, preferredSize) => `${baseUrl}${asset.id}-${preferredSize}.jpg`
 
 export { getImageSrc };

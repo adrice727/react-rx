@@ -12,14 +12,26 @@ var _projects = new Map();
 var _getProject = (id) => api.get(`project/${id}`);
 var _getProjectStream = (id) => Rx.Observable.fromPromise(_getProject(id));
 
+
+var _buildTeam = R.map( collaborator => {
+  return {
+    'id': collaborator.id,
+    'name': `${collaborator.user.firstName} ${collaborator.user.lastName}`,
+    'role': R.path(['roles', '0'], collaborator),
+    'imageSrc': getImageSrc(R.path(['user', 'profileImage'], collaborator), 's')
+  }
+});
+
+
 class Project {
   constructor(data) {
     R.keys(data).forEach( key => this[key] = data[key]);
     this.type = R.path(['projectTypeList', '0'], data);
     this.agencies = R.map(id => ({id: id, 'name': data.companies[id]}) ,R.keys(data.companies));
-    this.primaryAsset.coverImageId = this.primaryAsset.id;
+    this.team = _buildTeam(data.collaborators);
   }
 }
+
 
 
 /* Public Methods */
