@@ -18,7 +18,7 @@ var _buildTeam = R.map( collaborator => {
     'id': collaborator.id,
     'name': `${collaborator.user.firstName} ${collaborator.user.lastName}`,
     'role': R.path(['roles', '0'], collaborator),
-    'imageSrc': getImageSrc(R.path(['user', 'profileImage'], collaborator), 's')
+    'imageSrc': getImageSrc(R.path(['user', 'profileImage'], collaborator), 'c')
   }
 });
 

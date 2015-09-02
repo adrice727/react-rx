@@ -1,5 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
+import ProjectTeamMember from './ProjectTeamMember';
 
 @Radium
 export default class ProjectTeam extends React.Component {
@@ -21,6 +22,9 @@ export default class ProjectTeam extends React.Component {
               {project.team && project.team.length}
             </span>
           </div>
+          <ul style={styles.teamList}>
+            {project.team && project.team.map( member => <ProjectTeamMember member={member}/>)}
+          </ul>
         </div>
 
         <div className='project-team-members' style={styles.section}>
@@ -73,5 +77,8 @@ var styles = {
     color: '#818287',
     fontSize: '12px',
     padding: '8px 0'
+  },
+  teamList: {
+    padding: '0'
   }
 }
