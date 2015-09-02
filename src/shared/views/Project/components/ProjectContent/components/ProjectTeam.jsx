@@ -9,21 +9,29 @@ export default class ProjectTeam extends React.Component {
   }
 
   render() {
+    let project = this.props.project;
+    console.log(project);
     return (
       <div className='projectTeam' style={styles.container}>
-        <div className='project-team-members' style={styles.descriptionContainer}>
-          <div className='project-team-members-header' style={styles.descriptionHeader}>
+        <div className='project-team-members' style={styles.section}>
+          <div className='project-team-members-header' style={styles.header}>
             Team Members
-            <i className="fa fa-users" style={styles.descriptionIcon}></i>
+            <span style={styles.count}>
+              <i className="fa fa-users" style={styles.icon}></i>
+              {project.team && project.team.length}
+            </span>
           </div>
-          <div className='project-details-description-header' style={styles.descriptionText}>
+        </div>
 
-          </div>
-          <div className='project-team-members-header' style={styles.descriptionHeader}>
+        <div className='project-team-members' style={styles.section}>
+          <div className='project-team-members-header' style={styles.header}>
             Key Terms
-            <i className="fa fa-tags" style={styles.descriptionIcon}></i>
+            <span style={styles.count}>
+              <i className="fa fa-tags" style={styles.icon}></i>
+              {project.team && project.team.length}
+            </span>
           </div>
-          <div className='project-details-description-header' style={styles.descriptionText}>
+          <div className='project-details-description-header' style={styles.text}>
 
           </div>
         </div>
@@ -41,10 +49,10 @@ var styles = {
     backgroundColor: '#EEEEF0',
     padding: '10px'
   },
-  descriptionContainer: {
+  section: {
     marginTop: '20px'
   },
-  descriptionHeader: {
+  header: {
     fontFamily: 'Roboto, serif',
     fontSize: '11px',
     color: '#B0B1B5',
@@ -52,12 +60,14 @@ var styles = {
     paddingBottom: '5px',
     borderBottom: 'solid 1px #CFCFCF'
   },
-  descriptionIcon: {
+  count: {
     float: 'right',
-    marginRight: '10px',
     position: 'relative',
     top: '-5px',
     fontSize: '18px'
+  },
+  icon : {
+    marginRight: '5px'
   },
   descriptionText: {
     color: '#818287',
