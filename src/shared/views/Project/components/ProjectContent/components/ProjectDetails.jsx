@@ -25,10 +25,10 @@ export default class ProjectDetails extends React.Component {
         </div>
         <div className='project-details-description' style={styles.descriptionContainer}>
           <div className='project-details-description-header' style={styles.descriptionHeader}>
-          Project Description
+            Project Description
           </div>
           <div className='project-details-description-header' style={styles.descriptionText}>
-          {project.description}
+            {project.description}
           </div>
         </div>
 
@@ -40,13 +40,12 @@ export default class ProjectDetails extends React.Component {
 var styles = {
   container : {
     width: '726px',
-    margin: '0 auto',
     backgroundColor: '#EEEEF0',
+    marginRight: '10px',
     padding: '10px'
   },
   featureContainer: {
     height: '490px',
-    width: '740px',
     margin: '0 auto',
     display: 'flex',
     justifyContent: 'center',
@@ -64,6 +63,7 @@ var styles = {
     fontSize: '11px',
     color: '#B0B1B5',
     textTransform: 'uppercase',
+    paddingBottom: '5px',
     borderBottom: 'solid 1px #CFCFCF'
   },
   descriptionText: {

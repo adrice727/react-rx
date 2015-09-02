@@ -22,6 +22,9 @@ export default class ProjectContent extends React.Component {
 
 var styles = {
   container: {
-    marginTop: '10px'
+    marginTop: '10px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'top'
   }
 };
