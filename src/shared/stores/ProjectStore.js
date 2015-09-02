@@ -2,6 +2,7 @@ import Rx from 'rx-lite';
 import R from 'ramda';
 import api from '../services/Api'
 import { createUser } from './UserStore';
+import { getImageSrc } from '../services/Asset';
 
 
 /* Project Store */
@@ -16,6 +17,7 @@ class Project {
     R.keys(data).forEach( key => this[key] = data[key]);
     this.type = R.path(['projectTypeList', '0'], data);
     this.agencies = R.map(id => ({id: id, 'name': data.companies[id]}) ,R.keys(data.companies));
+    this.primaryAsset.coverImageId = this.primaryAsset.id;
   }
 }
 
