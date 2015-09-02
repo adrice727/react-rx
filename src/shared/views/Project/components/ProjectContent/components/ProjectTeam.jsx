@@ -85,6 +85,7 @@ var styles = {
     marginTop: '5px'
   },
   tag: {
+    display: 'inline-block',
     margin: '2px',
     padding: '2px 10px',
     fontSize: '10px',
