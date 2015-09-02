@@ -9,7 +9,7 @@ export default class ProjectSearchCard extends React.Component {
   constructor(props) {
     super(props)
     this.project = this.props.project;
-    this.imageUrl = getImageSrc(this.project, 'th');
+    this.imageUrl = getImageSrc({id: this.project.coverImageId}, 'c');
   }
 
   render() {

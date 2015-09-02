@@ -13,9 +13,9 @@ export default class ProjectTeam extends React.Component {
     let project = this.props.project;
     console.log(project);
     return (
-      <div className='projectTeam' style={styles.container}>
+      <div className='project-team' style={styles.container}>
         <div className='project-team-members' style={styles.section}>
-          <div className='project-team-members-header' style={styles.header}>
+          <div className='project-team-header' style={styles.header}>
             Team Members
             <span style={styles.count}>
               <i className="fa fa-users" style={styles.icon}></i>
@@ -27,16 +27,16 @@ export default class ProjectTeam extends React.Component {
           </ul>
         </div>
 
-        <div className='project-team-members' style={styles.section}>
-          <div className='project-team-members-header' style={styles.header}>
+        <div className='project-tags' style={styles.section}>
+          <div className='project-tags-header' style={styles.header}>
             Key Terms
             <span style={styles.count}>
               <i className="fa fa-tags" style={styles.icon}></i>
               {project.team && project.team.length}
             </span>
           </div>
-          <div className='project-details-description-header' style={styles.text}>
-
+          <div className='project-tags-list' style={styles.tagList}>
+            { project.tags && project.tags.map( (tag,i) => <span key={i} style={styles.tag}>{tag}</span>)}
           </div>
         </div>
 
@@ -80,5 +80,20 @@ var styles = {
   },
   teamList: {
     padding: '0'
+  },
+  tagList: {
+    marginTop: '5px'
+  },
+  tag: {
+    margin: '2px',
+    padding: '2px 10px',
+    fontSize: '10px',
+    textTransform: 'uppercase',
+    color: '#229FBC',
+    border: '1px solid #229FBC',
+    cursor: 'pointer',
+    ':hover': {
+      backgroundColor: '#ffffff'
+    }
   }
 }
