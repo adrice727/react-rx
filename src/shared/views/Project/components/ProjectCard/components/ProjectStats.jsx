@@ -14,7 +14,7 @@ export default class ProjectStats extends React.Component {
     var stats = buildStats(this.props.stats);
     return (
       <div style={styles.container}>
-        { stats.map( stat => <CardStat data={stat}/> ) }
+        { stats.map( (stat,i) => <CardStat key={i} data={stat}/> ) }
       </div>
     );
   }

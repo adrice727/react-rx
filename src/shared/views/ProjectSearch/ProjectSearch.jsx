@@ -10,7 +10,9 @@ export default class ProjectSearch extends React.Component {
     super(props);
   }
 
-  updateSearch (value) { searchQuery.onNext(value); }
+  updateSearch (value) {
+    console.log('oxoxox', searchQuery)
+    searchQuery.onNext(value); }
 
   render() {
     return (

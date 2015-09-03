@@ -3,6 +3,7 @@ import Radium from 'radium';
 import LikeButton from '../../../../components/LikeButton';
 import ProjectDetails from './components/ProjectDetails';
 import ProjectStats from './components/ProjectStats';
+import { projectLikeStream } from '../../../../services/Like';
 
 @Radium
 export default class ProjectCard extends React.Component {
@@ -10,6 +11,7 @@ export default class ProjectCard extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <div className='project-card' style={styles.card}>

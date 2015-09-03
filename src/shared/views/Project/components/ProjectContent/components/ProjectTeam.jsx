@@ -11,7 +11,6 @@ export default class ProjectTeam extends React.Component {
 
   render() {
     let project = this.props.project;
-    console.log(project);
     return (
       <div className='project-team' style={styles.container}>
         <div className='project-team-members' style={styles.section}>
