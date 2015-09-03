@@ -8,13 +8,13 @@ export default class SearchBox extends React.Component {
   constructor(props) {
     super(props);
     this.placeholder = `Search for a ${this.props.type}`;
-    this.state = { value : '' };
     this.handleChange.bind(this);
   }
 
   handleChange() {
-    this.setState({value: event.target.value});
-    this.props.updateSearch(event.target.value);
+    let value = event.target.value;
+    this.setState({value});
+    !!value && this.props.updateSearch(value);
   }
 
   render() {

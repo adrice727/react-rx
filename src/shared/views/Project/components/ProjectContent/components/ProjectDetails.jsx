@@ -69,6 +69,7 @@ var styles = {
   descriptionText: {
     color: '#818287',
     fontSize: '12px',
+    lineHeight: '16px',
     padding: '8px 0'
   }
 }
