@@ -15,8 +15,7 @@ export default class ProjectDetails extends React.Component {
 
   render() {
     let project = this.props.project;
-    console.log('the project', project);
-    let primaryAssetSrc = project.primaryAsset ? getImageSrc(project.primaryAsset, 's') : '';
+    let primaryAssetSrc = project.primaryAsset ? getImageSrc(project.primaryAsset, 'o') : '';
 
     return (
       <div className='project-details' style={styles.container}>

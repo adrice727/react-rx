@@ -36,7 +36,7 @@ class Project {
 /* Public Methods */
 var requestProject = (id, update) => {
 
-  var projectStream = _getProjectStream(id)
+  let projectStream = _getProjectStream(id)
     .map( response => new Project(response.data) )
 
   _projects.set(id, projectStream);
