@@ -36,6 +36,8 @@ class Project {
 /* Public Methods */
 var requestProject = (id, update) => {
 
+  if ( _projects.has(id) ) { return _projects.get(id); }
+
   let projectStream = _getProjectStream(id)
     .map( response => new Project(response.data) )
 
