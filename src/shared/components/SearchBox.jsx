@@ -1,6 +1,7 @@
 import React from 'react';
 import Rx from 'rx-lite';
 import Radium from 'radium';
+import { projectRequestStream as searchQuery } from '../services/Search';
 
 @Radium
 export default class SearchBox extends React.Component {
@@ -14,7 +15,7 @@ export default class SearchBox extends React.Component {
   handleChange() {
     let value = event.target.value;
     this.setState({value});
-    !!value && this.props.updateSearch(value);
+    !!value && searchQuery.onNext(value);
   }
 
   render() {
@@ -29,6 +30,10 @@ export default class SearchBox extends React.Component {
                onChange={this.handleChange.bind(this)}/>
       </div>
     )
+  }
+
+  componentWillUnmount () {
+    searchQuery.onCompleted();
   }
 }
 

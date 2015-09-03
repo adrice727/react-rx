@@ -33,7 +33,6 @@ class Project {
 }
 
 
-
 /* Public Methods */
 var requestProject = (id, update) => {
 

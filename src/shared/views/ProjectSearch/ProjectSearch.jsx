@@ -2,17 +2,12 @@ import React from 'react';
 import Rx from 'rx-lite';
 import SearchBox from '../../components/SearchBox';
 import ProjectSearchResults from './components/ProjectSearchResults';
-import { projectRequestStream as searchQuery, projectResponseStream as searchResults } from '../../services/Search';
 
 export default class ProjectSearch extends React.Component {
 
   constructor(props) {
     super(props);
   }
-
-  updateSearch (value) {
-    console.log('oxoxox', searchQuery)
-    searchQuery.onNext(value); }
 
   render() {
     return (
@@ -23,5 +18,4 @@ export default class ProjectSearch extends React.Component {
     );
   }
 
-  componentWillUnmount () { searchQuery.onCompleted() }
 }
