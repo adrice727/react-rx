@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import { projectLikeStream } from '../services/Like';
+import { likeProject as likeStream } from '../stores/ProjectStore';
 
 
 @Radium
@@ -13,7 +13,7 @@ export default class LikeButton extends React.Component {
   }
 
   likeProject() {
-    projectLikeStream.onNext(this.props.id);
+    likeStream.onNext(this.props.id);
   }
 
   render() {

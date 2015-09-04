@@ -6,14 +6,20 @@ import { getImageSrc } from '../services/Asset';
 
 
 /* Project Store */
-var _projects = new Map();
+const _projects = new Map();
 
 /* Private Methods */
-var _getProject = (id) => api.get(`project/${id}`);
-var _getProjectStream = (id) => Rx.Observable.fromPromise(_getProject(id));
+const _getProjectStream = R.compose(
+  request => Rx.Observable.fromPromise(request),
+  id => api.get(`project/${id}`)
+);
 
+const _getLikeStream = R.compose(
+  request => Rx.Observable.fromPromise(request),
+  id => api.get(`project/${id}`)
+);
 
-var _buildTeam = R.map( collaborator => {
+const _buildTeam = R.map( collaborator => {
   return {
     'id': collaborator.id,
     'name': `${collaborator.user.firstName} ${collaborator.user.lastName}`,
@@ -22,7 +28,7 @@ var _buildTeam = R.map( collaborator => {
   }
 });
 
-
+/* Project Constructor */
 class Project {
   constructor(data) {
     R.keys(data).forEach( key => this[key] = data[key]);
@@ -32,9 +38,8 @@ class Project {
   }
 }
 
-
 /* Public Methods */
-var requestProject = (id, update) => {
+const requestProject = (id, update) => {
 
   if ( _projects.has(id) ) { return _projects.get(id); }
 
@@ -46,8 +51,47 @@ var requestProject = (id, update) => {
   return _projects.get(id);
 }
 
+const likeProject = new Rx.Subject();
+
+const x = likeProject.subscribe( id => {
+
+  console.log(_projects.get(id))
+
+  // let doThings = project => {
+  //   let p = _projects.get(project.id);
+  //   console.log(p);
+  // }
+  // let addProject = project => _projects.set(project.id, new new Rx.BehaviorSubject(project));
+  // let updateProject = project => _projects.get(project.id).onNext(project);
+  //
+  // let likeStream = _getLikeStream(id)
+  //   .map( (response) =>  {
+  //     response.data.numLikes++;
+  //     response.data.likedByCurrentUser = true;
+  //     return response.data;
+  //   })
+  //   .map( data => new Project(data) )
+  //   .tap( project => doThings(project) )
+  //   .subscribe();
+})
+
+// let likeStream = _getLikeStream(id)
+//   .map( (response) => {
+//     reponse.data.numLikes++;
+//     response.data.likeByCurrentUser = true;
+//     return response.data
+//   })
+//   .map( data => new Project(data) )
+//   .tap( (project) => {
+//     if ( _projects.has(id) ) {
+//       let project = _projects.get(id);
+//       console.log('here', project);
+//     }
+//   })
+
+
 
 
 
 /* Exports */
-export { requestProject };
+export { requestProject, likeProject };
