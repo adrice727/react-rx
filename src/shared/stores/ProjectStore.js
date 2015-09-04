@@ -40,10 +40,13 @@ var requestProject = (id, update) => {
 
   let projectStream = _getProjectStream(id)
     .map( response => new Project(response.data) )
+    .map( project => new Rx.BehaviorSubject(project) );
 
   _projects.set(id, projectStream);
   return _projects.get(id);
 }
+
+
 
 
 /* Exports */

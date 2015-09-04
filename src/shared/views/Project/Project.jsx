@@ -18,7 +18,7 @@ export default class Project extends React.Component {
 
   componentWillMount () {
     var stream = this.projectStream.subscribe( (project) => {
-      this.setState({project: project});
+      this.setState({project: project.value});
     })
     this.subsciptions.push(stream);
   }
