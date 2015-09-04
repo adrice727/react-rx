@@ -19,17 +19,19 @@ var buildUrl = (relativeUrl, queryParams, search) => {
 
 /* Module */
 
-var api = {};
+var api = {
 
-api.get = (relativeUrl, queryParams) => {
-  var url = buildUrl(relativeUrl, queryParams);
-  return axios.get(url);
-}
+  get (relativeUrl, queryParams) {
+    var url = buildUrl(relativeUrl, queryParams);
+    return axios.get(url);
+  },
 
-api.search = (relativeUrl, queryParams) => {
-  var url = buildUrl(relativeUrl, queryParams, true);
-  return axios.get(url);
-}
+  search (relativeUrl, queryParams) {
+    var url = buildUrl(relativeUrl, queryParams, true);
+    return axios.get(url);
+  }
+
+};
 
 /* Export */
 
