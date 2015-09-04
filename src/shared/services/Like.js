@@ -5,6 +5,6 @@ import { requestProject } from '../stores/ProjectStore';
 export var projectLikeStream = new Rx.Subject();
 
 export var processProjectLikes = projectLikeStream
-  .flatMap( event => event );
+  .map( id => id );
 
-processProjectLikes.subscribe( t => console.log(requestProject(t)));
+processProjectLikes.subscribe( id => console.log(`Project ${id} liked`));

@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import { likeProject as likeStream } from '../stores/ProjectStore';
+import { projectLikeStream as likeStream } from '../services/Like';
 
 
 @Radium
