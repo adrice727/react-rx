@@ -15,30 +15,47 @@ const _getProjectStream = R.compose(
 
 const _getLikeStream = R.compose(
   request => Rx.Observable.fromPromise(request),
-  id => api.get(`project/${id}`) // this will change to POST
+  id => api.get(`project/${id}`) // this will change to a POST
 );
 
-const _createRequestStream = (id) => {
-  let projectStream = _getProjectStream(id)
-    .map( response => new Project(response.data) )
-    .map( project => new Rx.BehaviorSubject(project) );
+const requestSubject = new Rx.Subject();
+const likeProject = new Rx.Subject();
 
-  _projects.set(id, new Rx.BehaviorSubject(projectStream));
-  return _projects.get(id);
-}
-
-const _createProjectMetaStream = (id) => {
-
-}
-
-const _updateMap = (project) => {
-  if ( _projects.has(project.id) ) {
-    let subject = _projects.get(id);
-    subject.onNext(project);
+const _createProject = (id) => {
+  if ( _projects.has(id) ) {
+    return _projects.get(id);
   } else {
-    _projects.set(project.id, new Rx.BehaviorSubject(project))
+    return _projects.set(id, new Rx.BehaviorSubject()).get(id);
   }
 }
+
+const requestProject = (id) => {
+  requestSubject.onNext(id);
+  return _createProject(id);
+}
+
+// var responseStream = requestStream
+//   .flatMap(function(requestUrl) {
+//     return Rx.Observable.fromPromise(jQuery.getJSON(requestUrl));
+//   });
+
+// const _createRequestStream = (id) => {
+//   let projectStream = _getProjectStream(id)
+//     .map( response => new Project(response.data) )
+//     .map( project => new Rx.BehaviorSubject(project) );
+//
+//   _projects.set(id, new Rx.BehaviorSubject(projectStream));
+//   return _projects.get(id);
+// }
+
+// var responseStream = requestStream
+//   .flatMap(function(requestUrl) {
+//     return Rx.Observable.fromPromise(jQuery.getJSON(requestUrl));
+//   });
+//
+// const _createProjectMetaStream = (id) => {
+//
+// }
 
 const _mockLikes = (response) => {
   response.data.numLikes++;
@@ -46,30 +63,38 @@ const _mockLikes = (response) => {
   return response;
 }
 
-const _requestStream = (id) => _getProjectStream(id);
-const _likeStream = (id) => _getLikeStream(id).map(_mockLikes);
+const _requestStream = requestSubject
+  .flatMap( id => _getProjectStream(id))
 
-/* Master Stream */
-const _projectMetaStream = Rx.Observable.merge(_requestStream, _likeStream)
-  .flatMap( response => new Project(response.data) );
+const _likeStream = likeProject
+  .tap(id => console.log('liked', id))
+  .flatMap( id => _getLikeStream(id))
 
-  var sub = _projectMetaStream.subscribe(h => console.log(h));
+const _updateStore = (project) => {
+  if ( _projects.has(project.id) ) {
+    _projects.get(project.id).onNext(project);
+  } else {
+    _projects.set(project.id, new Rx.BehaviorSubject(project));
+  }
+}
 
-// let subscribtion = _projectMetaStream.subscribe( project => {
-//   _updateMap(project);
-// })
+
+/* Meta Stream */
+var projectMetaStream = Rx.Observable.merge(_requestStream, _likeStream)
+  .map( response => new Project(response.data) )
+
+projectMetaStream.subscribe( project => _updateStore(project) );
+
 
 /* Project Constructor & Related Methods */
 class Project {
   constructor(data) {
     R.keys(data).forEach( key => this[key] = data[key]);
     this.type = R.path(['projectTypeList', '0'], data);
-    this.agencies = _getAgencies(R.keys(data.companies));
+    this.agencies = R.map( id => ({id: id, 'name': data.companies[id]}), R.keys(data.companies));
     this.team = _buildTeam(data.collaborators);
   }
 }
-
-const _getAgencies = R.map( id => ({id: id, 'name': data.companies[id]}) );
 
 const _buildTeam = R.map( collaborator => {
   return {
@@ -83,39 +108,39 @@ const _buildTeam = R.map( collaborator => {
 /* Public Methods */
 // const requestProject = (id) =>  _projects.has(id) ? _projects.get(id) : _createProjectStream(id);
 
-const requestProject = (id) => {
+// const requestProject = (id) => {
+//
+//   if ( _projects.has(id) ) {
+//     return _projects.get(id);
+//   } else {
+//     _requestStream(id);
+//     return _projects.set(id, new Rx.BehaviorSubject()).get(id);
+//   }
+// }
 
-  if ( _projects.has(id) ) {
-    return _projects.get(id);
-  } else {
-    _requestStream(id);
-    return _projects.set(id, new Rx.BehaviorSubject()).get(id);
-  }
-}
-
-const likeProject = new Rx.Subject();
-
-const x = likeProject.subscribe( id => {
-
-  console.log(_projects.get(id))
-
-  // let doThings = project => {
-  //   let p = _projects.get(project.id);
-  //   console.log(p);
-  // }
-  // let addProject = project => _projects.set(project.id, new new Rx.BehaviorSubject(project));
-  // let updateProject = project => _projects.get(project.id).onNext(project);
-  //
-  // let likeStream = _getLikeStream(id)
-  //   .map( (response) =>  {
-  //     response.data.numLikes++;
-  //     response.data.likedByCurrentUser = true;
-  //     return response.data;
-  //   })
-  //   .map( data => new Project(data) )
-  //   .tap( project => doThings(project) )
-  //   .subscribe();
-})
+// const likeProject = new Rx.Subject();
+//
+// const x = likeProject.subscribe( id => {
+//
+//   console.log(_projects.get(id))
+//
+//   // let doThings = project => {
+//   //   let p = _projects.get(project.id);
+//   //   console.log(p);
+//   // }
+//   // let addProject = project => _projects.set(project.id, new new Rx.BehaviorSubject(project));
+//   // let updateProject = project => _projects.get(project.id).onNext(project);
+//   //
+//   // let likeStream = _getLikeStream(id)
+//   //   .map( (response) =>  {
+//   //     response.data.numLikes++;
+//   //     response.data.likedByCurrentUser = true;
+//   //     return response.data;
+//   //   })
+//   //   .map( data => new Project(data) )
+//   //   .tap( project => doThings(project) )
+//   //   .subscribe();
+// })
 
 // let likeStream = _getLikeStream(id)
 //   .map( (response) => {

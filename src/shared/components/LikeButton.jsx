@@ -13,6 +13,7 @@ export default class LikeButton extends React.Component {
   }
 
   likeProject() {
+    console.log(likeStream, this.props);
     likeStream.onNext(this.props.id);
   }
 

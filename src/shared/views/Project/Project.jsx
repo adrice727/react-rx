@@ -1,7 +1,7 @@
 import React from 'react';
 import Radium from 'radium';
 import Rx from 'rx-lite';
-import { requestProject } from '../../stores/ProjectStore';
+import { requestProject, projectStream } from '../../stores/ProjectStore';
 import ProjectCard from './components/ProjectCard/ProjectCard';
 import ProjectNav from './components/ProjectNav/ProjectNav';
 import ProjectContent from './components/ProjectContent/ProjectContent';
@@ -12,14 +12,12 @@ export default class Project extends React.Component {
   constructor(props) {
     super(props);
     this.state = {id: props.params.projectId, project: {} };
-    this.projectStream = requestProject(this.state.id);
     this.subsciptions = [];
   }
 
   componentWillMount () {
-    var stream = this.projectStream.subscribe( (project) => {
-      console.log(project);
-      // !!project && this.setState({project: project.value});
+    var stream = requestProject(this.state.id).subscribe( project => {
+      !!project && this.setState({project});
     })
     this.subsciptions.push(stream);
   }
