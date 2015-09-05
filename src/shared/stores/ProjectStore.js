@@ -4,36 +4,42 @@ import api from '../services/Api'
 import { createUser } from './UserStore';
 import { getImageSrc } from '../services/Asset';
 
-/* Project Store */
+/* A solid introduction to RxJS Streams and Observables: https://goo.gl/KVPXp6 */
+
+/***** Project Store *****/
 const _projects = new Map();
 
-/* Private Methods */
+/***** Private Methods *****/
+
+/* A composed function which returns an observable stream that emits values
+ * upon the resolution of promises.
+ * @param {String} id
+ */
 const _getProjectStream = R.compose(
   request => Rx.Observable.fromPromise(request),
   id => api.get(`project/${id}`)
 );
+
+/* An observable subject which emits projects ids when called with 'onNext'.
+ * ex. requestSubject.onNext('a14x4') => 'a14x4'
+ */
+const requestSubject = new Rx.Subject();
+
+/* An observable stream which maps values from the requestSubject.  With each
+ * value (project id), an observable stream is emitted.
+ * https://goo.gl/iQvpbC
+ */
+const _requestStream = requestSubject
+  .flatMap( id => _getProjectStream(id) )
+
+
 
 const _getLikeStream = R.compose(
   request => Rx.Observable.fromPromise(request),
   id => api.get(`project/${id}`) // this will change to a POST
 );
 
-const requestSubject = new Rx.Subject();
-const likeProject = new Rx.Subject();
-
-const _createProject = (id) => {
-  if ( _projects.has(id) ) {
-    return _projects.get(id);
-  } else {
-    return _projects.set(id, new Rx.BehaviorSubject()).get(id);
-  }
-}
-
-const requestProject = (id) => {
-  requestSubject.onNext(id);
-  return _createProject(id);
-}
-
+/* Faking it until login is set up */
 const _mockProjectLike = (response) => {
   response.data.numLikes++;
   response.data.numViews--;
@@ -41,30 +47,26 @@ const _mockProjectLike = (response) => {
   return response;
 }
 
-const _requestStream = requestSubject
-  .flatMap( id => _getProjectStream(id))
+const likeSubject = new Rx.Subject();
 
-const _likeStream = likeProject
+const _likeStream = likeSubject
   .flatMap( id => _getLikeStream(id))
   .map( _mockProjectLike )
 
-const _updateStore = (project) => {
-  if ( _projects.has(project.id) ) {
-    _projects.get(project.id).onNext(project);
-  } else {
-    _projects.set(project.id, new Rx.BehaviorSubject(project));
-  }
-}
-
-
-/* Meta Stream */
-var projectMetaStream = Rx.Observable.merge(_requestStream, _likeStream)
+/*
+ * Metastream which combines multiple streams into a single observable
+ * stream of projects.
+ */
+const projectMetaStream = Rx.Observable.merge(_requestStream, _likeStream)
   .map( response => new Project(response.data) )
 
+/*
+ * Listen to metastream and update project store as necessary
+ */
 projectMetaStream.subscribe( project => _updateStore(project) );
 
 
-/* Project Constructor & Related Methods */
+/***** Project Constructor & Related Methods *****/
 class Project {
   constructor(data) {
     R.keys(data).forEach( key => this[key] = data[key]);
@@ -83,60 +85,37 @@ const _buildTeam = R.map( collaborator => {
   }
 });
 
-/* Public Methods */
-// const requestProject = (id) =>  _projects.has(id) ? _projects.get(id) : _createProjectStream(id);
 
-// const requestProject = (id) => {
-//
-//   if ( _projects.has(id) ) {
-//     return _projects.get(id);
-//   } else {
-//     _requestStream(id);
-//     return _projects.set(id, new Rx.BehaviorSubject()).get(id);
-//   }
-// }
+/*
+ * Checks the store to see if the project already exists.  If so, it passes the
+ * updated project to the behavior subject.  Otherwise, it creates a new behavior
+ * subject with the project as its initial value
+ * TODO: Combine with '_addProjectToStore'
+ */
+const _updateStore = (project) => {
+  if ( _projects.has(project.id) ) {
+    _projects.get(project.id).onNext(project);
+  } else {
+    _projects.set(project.id, new Rx.BehaviorSubject(project));
+  }
+}
 
-// const likeProject = new Rx.Subject();
-//
-// const x = likeProject.subscribe( id => {
-//
-//   console.log(_projects.get(id))
-//
-//   // let doThings = project => {
-//   //   let p = _projects.get(project.id);
-//   //   console.log(p);
-//   // }
-//   // let addProject = project => _projects.set(project.id, new new Rx.BehaviorSubject(project));
-//   // let updateProject = project => _projects.get(project.id).onNext(project);
-//   //
-//   // let likeStream = _getLikeStream(id)
-//   //   .map( (response) =>  {
-//   //     response.data.numLikes++;
-//   //     response.data.likedByCurrentUser = true;
-//   //     return response.data;
-//   //   })
-//   //   .map( data => new Project(data) )
-//   //   .tap( project => doThings(project) )
-//   //   .subscribe();
-// })
+const _addProjectToStore = (id) => {
+  if ( _projects.has(id) ) {
+    return _projects.get(id);
+  } else {
+    return _projects.set(id, new Rx.BehaviorSubject()).get(id);
+  }
+}
 
-// let likeStream = _getLikeStream(id)
-//   .map( (response) => {
-//     reponse.data.numLikes++;
-//     response.data.likeByCurrentUser = true;
-//     return response.data
-//   })
-//   .map( data => new Project(data) )
-//   .tap( (project) => {
-//     if ( _projects.has(id) ) {
-//       let project = _projects.get(id);
-//       console.log('here', project);
-//     }
-//   })
+/***** Public Methods *****/
 
+const requestProject = (id) => {
+  requestSubject.onNext(id);
+  return _addProjectToStore(id);
+}
 
+const likeProject = id => likeSubject.onNext(id);
 
-
-
-/* Exports */
+/***** Exports *****/
 export { requestProject, likeProject };
