@@ -34,31 +34,9 @@ const requestProject = (id) => {
   return _createProject(id);
 }
 
-// var responseStream = requestStream
-//   .flatMap(function(requestUrl) {
-//     return Rx.Observable.fromPromise(jQuery.getJSON(requestUrl));
-//   });
-
-// const _createRequestStream = (id) => {
-//   let projectStream = _getProjectStream(id)
-//     .map( response => new Project(response.data) )
-//     .map( project => new Rx.BehaviorSubject(project) );
-//
-//   _projects.set(id, new Rx.BehaviorSubject(projectStream));
-//   return _projects.get(id);
-// }
-
-// var responseStream = requestStream
-//   .flatMap(function(requestUrl) {
-//     return Rx.Observable.fromPromise(jQuery.getJSON(requestUrl));
-//   });
-//
-// const _createProjectMetaStream = (id) => {
-//
-// }
-
-const _mockLikes = (response) => {
+const _mockProjectLike = (response) => {
   response.data.numLikes++;
+  response.data.numViews--;
   response.data.likedByCurrentUser = true;
   return response;
 }
@@ -67,8 +45,8 @@ const _requestStream = requestSubject
   .flatMap( id => _getProjectStream(id))
 
 const _likeStream = likeProject
-  .tap(id => console.log('liked', id))
   .flatMap( id => _getLikeStream(id))
+  .map( _mockProjectLike )
 
 const _updateStore = (project) => {
   if ( _projects.has(project.id) ) {
