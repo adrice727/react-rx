@@ -9,14 +9,10 @@ export default class ProjectSearchResults extends React.Component {
   constructor(props) {
     super(props);
     this.results = this.props.results;
-    this.updateResults.bind(this)
     this.state = {results: []}
     this.subscriptions = [];
   }
 
-  updateResults () { this.props.updateSearch(results) }
-
-  // This is working
   componentWillMount () {
     var resultsStream = searchResults.subscribe( (results) => {
       this.setState({results: results});

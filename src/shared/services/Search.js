@@ -3,9 +3,9 @@ import Rx from 'rx-lite';
 import R from 'ramda';
 
 
-/* Private methods */
+/***** Public methods *****/
 
-/* Create behavior subject whose initial value is an empty string. The value of
+/* Subject whose initial value is an empty string. The value of
  * the subject will be updated by as user enters input.
  */
 export var projectRequestStream = new Rx.Subject();

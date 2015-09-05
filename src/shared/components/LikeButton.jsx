@@ -17,7 +17,7 @@ export default class LikeButton extends React.Component {
 
   render() {
     return (
-      <button key='c1'style={styles.button} onClick={this.likeProject.bind(this)}>
+      <button key='c1' style={styles.button} onClick={this.likeProject.bind(this)}>
         <i key='c2' style={styles.icon} className="fa fa-thumbs-up"></i>
         <div key='c3' style={styles.label} >{this.state.liked ? 'Liked' : 'Like'}</div>
       </button>
