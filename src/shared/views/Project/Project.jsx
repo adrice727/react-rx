@@ -17,7 +17,7 @@ export default class Project extends React.Component {
 
   componentWillMount () {
     var stream = requestProject(this.state.id).subscribe( project => {
-      !!project && this.setState({project});
+      !!project && this.setState({project: project.project});
     })
     this.subsciptions.push(stream);
   }

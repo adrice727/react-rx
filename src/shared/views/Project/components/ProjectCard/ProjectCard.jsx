@@ -19,7 +19,7 @@ export default class ProjectCard extends React.Component {
           id={this.props.project.id}
           liked={this.props.project.likedByCurrentUser} />
         <ProjectDetails project={this.props.project} />
-        <ProjectStats stats={{views: this.props.project.numViews, likes: this.props.project.numLikes}} />
+        <ProjectStats type='project' id={this.props.project.id} stats={{views: this.props.project.numViews, likes: this.props.project.numLikes}} />
       </div>
     );
   }

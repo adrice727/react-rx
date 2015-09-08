@@ -1,17 +1,25 @@
 import React from 'react';
 import Radium from 'radium';
 import R from 'ramda';
+import { showLikers } from '../stores/ProjectStore';
 
 @Radium
 export default class CardStat extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleClick.bind(this);
+  }
+
+  handleClick(){
+    if ( this.props.data.type === 'likes' ) {
+      showLikers.onNext(this.props.id);
+    }
   }
   render() {
     var stat = this.props.data;
     return (
-      <div style={styles.container}>
+      <div onClick={this.handleClick.bind(this)}style={[styles.container, stat.type === 'likes' && styles.clickable]}>
         <div style={[styles.base, styles.value]}>{stat.value}</div>
         <div style={[styles.base, styles.label]}>{stat.type}</div>
       </div>
@@ -46,5 +54,8 @@ var styles = {
     textTransform: 'uppercase',
     fontSize: '11px',
     lineHeight: '14px'
+  },
+  clickable: {
+    cursor: 'pointer'
   }
 }

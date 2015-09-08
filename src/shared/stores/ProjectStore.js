@@ -49,9 +49,21 @@ const _mockProjectLike = (response) => {
 
 const likeSubject = new Rx.Subject();
 
+const _getLikersStream = R.compose(
+  request => Rx.Observable.fromPromise(request),
+  id => api.get(`project/${id}/likers`)
+);
+
 const _likeStream = likeSubject
   .flatMap( id => _getLikeStream(id))
   .map( _mockProjectLike )
+
+const showLikers = new Rx.Subject();
+
+const _likersStream = showLikers
+    .flatMap( id => _getLikersStream(id) )
+    .tap(h => console.log(h))
+
 
 /*
  * Metastream which combines multiple streams into a single observable
@@ -94,10 +106,11 @@ const _buildTeam = R.map( collaborator => {
  */
 const _updateStore = (project) => {
   if ( _projects.has(project.id) ) {
-    _projects.get(project.id).onNext(project);
+    _projects.get(project.id).onNext({project});
   } else {
-    _projects.set(project.id, new Rx.BehaviorSubject(project));
+    _projects.set(project.id, new Rx.BehaviorSubject(x));
   }
+  console.log(_projects.get(project.id))
 }
 
 const _addProjectToStore = (id) => {
@@ -118,4 +131,4 @@ const requestProject = (id) => {
 const likeProject = id => likeSubject.onNext(id);
 
 /***** Exports *****/
-export { requestProject, likeProject };
+export { requestProject, likeProject, showLikers };

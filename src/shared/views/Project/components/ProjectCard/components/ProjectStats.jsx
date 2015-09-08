@@ -12,9 +12,10 @@ export default class ProjectStats extends React.Component {
   }
   render() {
     var stats = buildStats(this.props.stats);
+    console.log('this thigs', this.props);
     return (
       <div style={styles.container}>
-        { stats.map( (stat,i) => <CardStat key={i} data={stat}/> ) }
+        { stats.map( (stat,i) => <CardStat key={i} type={this.props.type} id={this.props.id} data={stat}/> ) }
       </div>
     );
   }
