@@ -1,5 +1,8 @@
+/* npm packages */
 import Rx from 'rx-lite';
 import R from 'ramda';
+import Immutable from 'immutable';
+/* modules */
 import api from '../services/Api'
 import { createUser } from './UserStore';
 import { getImageSrc } from '../services/Asset';
@@ -31,8 +34,6 @@ const requestSubject = new Rx.Subject();
  */
 const _requestStream = requestSubject
   .flatMap( id => _getProjectStream(id) )
-
-
 
 const _getLikeStream = R.compose(
   request => Rx.Observable.fromPromise(request),
@@ -94,9 +95,10 @@ const _buildTeam = R.map( collaborator => {
  */
 const _updateStore = (project) => {
   if ( _projects.has(project.id) ) {
-    _projects.get(project.id).onNext(project);
+    let updatedProject = _projects.get(project.id).value.merge(project);
+    _projects.get(project.id).onNext(updatedProject);
   } else {
-    _projects.set(project.id, new Rx.BehaviorSubject(project));
+    _projects.set(project.id, new Rx.BehaviorSubject(Immutable.Map(project)));
   }
 }
 
@@ -104,7 +106,7 @@ const _addProjectToStore = (id) => {
   if ( _projects.has(id) ) {
     return _projects.get(id);
   } else {
-    return _projects.set(id, new Rx.BehaviorSubject()).get(id);
+    return _projects.set(id, new Rx.BehaviorSubject(Immutable.Map())).get(id);
   }
 }
 

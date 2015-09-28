@@ -16,9 +16,12 @@ export default class Project extends React.Component {
   }
 
   componentWillMount () {
-    var stream = requestProject(this.state.id).subscribe( project => {
-      !!project && this.setState({project});
-    })
+    var stream = requestProject(this.state.id)
+      .subscribe( update => {
+        let project = update.toJS(); // Convert Immutable Map to JS Object
+        let existing = this.state.project;
+        project !== existing && this.setState({project});
+      })
     this.subsciptions.push(stream);
   }
 
