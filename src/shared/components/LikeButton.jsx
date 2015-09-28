@@ -1,6 +1,6 @@
 import React from 'react';
 import Radium from 'radium';
-import { projectLikeStream as likeStream } from '../services/Like';
+import { likeProject as likeStream } from '../stores/ProjectStore';
 
 @Radium
 export default class LikeButton extends React.Component {
