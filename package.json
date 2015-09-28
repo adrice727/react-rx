@@ -28,6 +28,7 @@
     "express-react-views": "^0.8.2",
     "extract": "^1.0.0",
     "for": "^0.1.0",
+    "immutable": "^3.7.5",
     "node-sass": "^3.2.0",
     "nodemon": "^1.4.1",
     "plugin": "^0.3.3",
