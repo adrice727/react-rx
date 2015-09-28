@@ -12,7 +12,7 @@ export default class App extends React.Component {
     return (
         <div style={styles.header}>
           <img style={styles.logo} src={'http://wpcdn.shocase.com/wp-content/uploads/2014/05/shocase_logo_retina.png'}/>
-          <h2 style={styles.text}>React + Rx</h2>
+          <h2 style={styles.text}>React + RxJS</h2>
         </div>
 
     );

@@ -12,7 +12,7 @@ export default class ProjectSearch extends React.Component {
   render() {
     return (
       <div>
-        <SearchBox type='project' updateSearch={this.updateSearch} />
+        <SearchBox type='project' />
         <ProjectSearchResults />
       </div>
     );

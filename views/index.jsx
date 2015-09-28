@@ -13,7 +13,7 @@ export default class Index extends React.Component {
     return (
         <html style={styles.html}>
           <head>
-            <title>React + Rx</title>
+            <title>React + RxJS</title>
             { css.map((href, k) => <link key={ k } rel="stylesheet" type="text/css" href={ href } />) }
           </head>
           <body style={styles.body}>
